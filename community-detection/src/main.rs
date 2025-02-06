@@ -27,6 +27,7 @@ fn main() {
 
     // Use the Kosaraju's algorithm to detect strongly connected components
     let scc = kosaraju_scc(&graph);
+    let mut largest_ssc = Vec::new();
     for component in scc {
         println!("{} nodes in community discovered", component.len());
         let usernames: Vec<&str> = component
@@ -34,5 +35,15 @@ fn main() {
             .map(|&node_index| graph[node_index])
             .collect();
         println!("{:?}", usernames);
+        if component.len() > largest_ssc.len() {
+            largest_ssc = component;
+        }
     }
+    println!(
+        " Largest Connected Component is {:?} ",
+        largest_ssc
+            .iter()
+            .map(|&node_index| graph[node_index])
+            .collect::<Vec<&str>>()
+    );
 }
